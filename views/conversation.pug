@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    .conversation
+        ul.list-group
+            each message in conversation.conversation
+                li.list-group-item.col-12 #{message.author}(#{(new Date(message.date)).toISOString().replace(/T/g, " ").replace(/....Z/g, "")}): #{message.message}
+        .newMessage    
+            input.form-control#messageText(type="text", placeholder="Nowa wiadomość...")
+            input.form-control#senderName(type="hidden" placeholder=user.username)
+            input.form-control#receiverName(type="hidden" placeholder=(conversation.user1 === user.username ? conversation.user2 : conversation.user1))
+            button#sendMessageButton.btn.btn-secondary(type="button") Wyślij
+
+    script(src='/javascripts/conversation.js')             
+
+    

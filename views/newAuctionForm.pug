@@ -1,0 +1,40 @@
+extends layout
+
+block content
+    .row
+        .newAuctionForm.col-lg-6
+            h3 Nowa Aukcja
+            br
+            form(id="addAuction", action="/auctions/add", method="post", enctype="multipart/form-data")
+                .form-group
+                    .form-check
+                        input.form-check-input(type="radio", name="typeOfAuction", id="buyNow", value="buyNow", checked="checked")
+                        label.form-check-label(for="buyNow") Kup teraz
+                    .form-check
+                        input.form-check-input(type="radio", name="typeOfAuction", id="auction", value="auction")
+                        label.form-check-label(for="auction") Aukcja
+                .form-group
+                    input.form-control(type='text', name="title", placeholder='Tytuł aukcji')
+                .form-group.buyNowShow
+                    input.form-control(type='text', name="price", placeholder='Cena (np. 99.99)')
+                .form-group.auctionShow
+                    input.form-control(type='text', name="startingPrice", placeholder='Cena początkowa (np. 99.99)')
+                .form-group
+                    label.form-check-label(for="pic") Wybierz zdjęcie: &nbsp;
+                    input(type="file" name="pic" accept="image/*" value="Wybierz...")
+                .form-group.auctionShow
+                    label.form-check-label(for="selectDuration") Czas trwania (minuty): &nbsp;
+                    select#selectDuration.form-control(name="duration")
+                        option 1
+                        option 2
+                        option 3
+                        option 4
+                        option 5
+                .form-group                    
+                    textarea#auctionDescription.form-control(name="description", rows="3") Opis aukcji
+                button.btn.btn-default(type='submit') Dodaj 
+            p.formError #{error}     
+
+    script(src='/javascripts/addAuction.js')        
+    script(src='/dep/jquery.validate.min.js')
+        

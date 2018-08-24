@@ -1,0 +1,72 @@
+extends layout
+
+block content
+    .auction
+        .row
+            .col-12.title
+                h2 #{auction.title}
+        .row
+            .col-12.col-md-6.image
+                img(src="/images/"+auction.img)
+            if auction.buyNow    
+                .col-6.col-md-6.col-12.buyNowPrice                    
+                    if auction.finished
+                        p Kupił #{auction.buyer} za #{auction.price} zł
+                    else
+                        p Cena: #{auction.price} zł
+                        if (user && user.username !== auction.username)
+                            button#buyNowButton.btn.btn-primary.btn-lg(type="button") Kup teraz
+
+            else
+                .col-6.col-md-6.col-12.auctionPrice
+                    if (auction.finished)
+                        p#timer Koniec aukcji
+                    else
+                        p#timer
+                    p Aktualna cana: 
+                        span#actualPrice #{auction.price} zł
+                        if(auction.price === auction.startingPrice)
+                            span#highestBidUsername  (cena początkowa)
+                        else
+                            span#highestBidUsername  (#{auction.buyer})
+                    if (user && user.username !== auction.username && !auction.finished)        
+                        .newOffer
+                            p Twoja oferta: 
+                            input(id="newOfferInput", type='number', value=(auction.price+1) min=(auction.price+1))
+                            p &nbsp; zł
+                            button#auctionButton.btn.btn-primary.btn-lg(type="button") Licytuj 
+        .row
+            .col-12.username.jumbotron
+                p Sprzedawca:  #{auction.username}
+                if (user && user.username !== auction.username)
+                    button(id="writeMessageButton" type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#messageModal") Napisz wiadomość do sprzedawcy...
+        .row
+            .col-12.description
+                p #{auction.description}
+
+    .modal.fade#messageModal(tabindex="-1" role="dialog")
+        .modal-dialog.modal-dialog-centered(role="document")
+            .modal-content
+                .modal-header
+                    h5.modal-title Nowa wiadomość
+                    button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                        span(aria-hidden="true") &times;
+                .modal-body
+                    form
+                        .form-group
+                            label(for="receiverName" class="col-form-label") Do:
+                            input.form-control#receiverName(type="text" placeholder=auction.username disabled)
+                            if (user)
+                                input.form-control#senderName(type="hidden" placeholder=user.username)
+                        .form-group
+                            label(for="messageText" class="col-form-label") Wiadomość:
+                            textarea.form-control#messageText
+                .modal-footer
+                    button(type="button" class="btn btn-secondary" data-dismiss="modal") Anuluj
+                    button(id="sendMessageButton" type="button" class="btn btn-primary") Wyślij
+    script.
+        let duration = "#{auction.duration}"; 
+    script(src='/javascripts/auction.js')             
+      
+
+    

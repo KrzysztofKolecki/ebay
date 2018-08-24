@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h3 Twoje aukcje
+  ul.list-group.auctionsList
+    each auction in auctions
+      li.list-group-item.col-12
+        .row
+          .col-md-2.col-12.auctionsListImage
+            a(href="/auctions?id="+auction.id)
+              img(src="/images/"+auction.img)
+          .col-md-8.col-12.auctionsListDescription
+            a(href="/auctions?id="+auction.id) #{auction.title}
+          .col-md-2.col-12.auctionsListPrice
+            if auction.finished
+              p Zakończona
+            else if auction.buyNow
+              p#buyNowPrice Kup teraz: #{auction.price} zł
+            else 
+              p#auctionPrice Licytacja: #{auction.price} zł
+  ul.pagination
+    - let n = Math.ceil(numberOfAuctions/5);
+    - let i = 1;
+    while i <= n
+      li.page-item
+        a.page-link(href="/?page=" + i)= i++   
+  script(src='/javascripts/userAuctions.js')             
+            
+      
+
+    

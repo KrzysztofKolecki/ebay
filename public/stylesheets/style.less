@@ -1,0 +1,53 @@
+body {
+  
+  .container {
+
+    display: flex;
+    flex-direction: column;
+    
+    .addAuctionButton {
+      margin-left: 15px;
+    }
+
+    nav {
+      width: 100%;
+      margin-bottom: 30px;
+
+      #navbarNav {
+        justify-content: flex-end;
+      }
+    }
+
+    .loginRegisterForm {
+      max-width: 400px;
+      margin: 0 auto;
+
+      .formError {
+        color: red;
+        margin-top: 5px;
+      }
+    }
+
+    .alert {
+      text-align: center;
+    }
+
+
+    .pagination {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (max-width: 991.98px) { 
+      width: 100%;
+      max-width: 992px;
+    }
+
+
+    @import "inboxStyle.less";
+    @import "auctionStyle.less";
+    @import "auctionListStyle.less";
+
+  }
+}

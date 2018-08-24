@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h3 Wiadomości
+  div.list-group.conversationsList
+    each conversation in conversations
+      .row
+        a.list-group-item.list-group-item-action.col-12(href="/inbox/get?id="+conversation.id)
+          .row.conversationRow
+            .col-md-2.col-12
+              if(user.username === conversation.user1)
+                p #{conversation.user2}
+              else
+                p #{conversation.user1}  
+            .col-md-10.col-12
+              p #{conversation.conversation.pop().message}   
+            
+      
+
+    

@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title=title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/dep/bootstrap.min.css')
+    script(src='/dep/jquery-3.3.1.min.js')
+    script(src='/dep/bootstrap.min.js')
+    script(src='/socket.io/socket.io.js')
+    if (user)
+      script.
+        let user = !{JSON.stringify(user)};
+    else
+      script.
+        let user = null;    
+    script(src='/javascripts/socketClient.js')
+
+  body
+    .container
+      .row
+        nav.navbar.navbar-expand-lg.navbar-light.bg-light
+          a.navbar-brand(href='/') µBay
+          button.navbar-toggler(type="button", data-toggle="collapse", data-target="#navbarNav", aria-controls="navbarNav", aria-expanded="false", aria-label="Toggle navigation")
+            span.navbar-toggler-icon
+          .collapse#navbarNav.navbar-collapse
+            ul.navbar-nav
+              if (!user)
+                li.nav-item
+                  a.nav-link(href="/login") Logowanie
+                li.nav-item  
+                  a.nav-link(href="/register") Rejestracja
+              if (user)
+                li.nav-item
+                  a.nav-link(href="/userAuctions") Twoje aukcje 
+                li.nav-item
+                  a.nav-link(href="/inbox") Wiadomości
+                li.nav-item
+                  a.nav-link(href="/logout") Wyloguj (#{user.username})
+      block content       
